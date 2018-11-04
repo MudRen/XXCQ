@@ -1,0 +1,4 @@
+#/d/yaowang/npc/zongguan.c
+dbase (["max_qi":564,"name":"Ìì×Ó","str":30,"startroom":"/d/yaowang/dating","qi":564,"douzhi":100,"id":"zongguan","race":"ÈËÀà","shenzhi":150,"per":15,"party":(["party_name":"[1;34mÒ©Íõ¹È[2;37;0m","level":8,"enter_time":951406479,"rank":"[1;37m×Ü¹Ü[2;37;0m",]),"dex":27,"max_shenzhi":150,"apt":46,"bac":15,"default_actions":,"eff_douzhi":100,"int":30,"kar":15,"max_jingli":100,"con":29,"zongguan_id":"zxcd","winner":"NONE","eff_jingli":100,"kill":0,"title":"·¢ÃÎ¶þµ³µÚÈý´úµÜ×Ó","eff_qi":564,"max_douzhi":200,"shen":0,"no_clean_up":1,"generation":0,"max_neili":1,"actions":,"attitude":"heroism","shen_type":0,"neili":1,"age":40,"gender":"ÄÐÐÔ","jingli":100,])
+actives (["healing":0,])
+skills (["healing":101,])
