@@ -1,10 +1,10 @@
-// xrm.c 
+// xrm.c
 //write by JackyBoy@CuteRabbit Studio for SDXL & CCTX 1999/6/2
 inherit F_CLEAN_UP;
 int help();
 int rmDir(string );
 
-static int flag; //判断是否终止递归调用，并限制递归层数(只允许低于16层的调用)
+nosave int flag; //判断是否终止递归调用，并限制递归层数(只允许低于16层的调用)
 
 int main(object me, string file)
 {
@@ -55,7 +55,7 @@ int rmDir(string file)
 	reset_eval_cost();
 	switch(file_size(file))
 	{
-		case -1 : 
+		case -1 :
 			flag=16;//设置出错中断
 			write("部分文件无权删除，错误！\n");
 			return 0;

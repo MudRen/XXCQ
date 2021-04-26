@@ -8,8 +8,8 @@
 #define HISTORY_BUFFER_SIZE 10
 
 mapping alias;
-static int last_cmd;
-static string *history, last_input;
+nosave int last_cmd;
+nosave string *history, last_input;
 int jinbi(object ob)
 {
 	//该函数将ob关禁闭！
@@ -26,11 +26,11 @@ string process_input(string str)
 {
 	string *args, cmd, argstr;
 	int i, j;
-	
+
 	notify_fail("什么？\n");
 	this_object()->clear_written();
 	if (! living(this_object())) return "";
-	
+
 	// attach system ?
 	if (this_object()->is_attach_system())
 	{

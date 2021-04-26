@@ -1,6 +1,6 @@
-// channeld.c 
+// channeld.c
 // 97-10-18 add intermud channel and emote capability
-// By ken@XAJH & fuyo@XAJH 
+// By ken@XAJH & fuyo@XAJH
 // 99-11-4 优化代码，增加同MUD分站间通讯功能。
 // By JackyBoy@CCTX&SNOW
 #include <ansi.h>
@@ -9,7 +9,7 @@
 #include <net/macros.h>
 
 inherit F_DBASE;
-static string *lock_chn=({});
+nosave string *lock_chn=({});
 string remove_addresses(string, int );
 
 mapping channels = ([
@@ -24,7 +24,7 @@ mapping channels = ([
 		"channel": "snow",
 		"msg_color": NOR+HIW,
 		"filter": 1,
-		"omit_address": 0, 
+		"omit_address": 0,
 	]),
     "adm":  ([  "msg_speak": HIW "【管理员】%s: %s\n" NOR,
 		"msg_emote": NOR+HIW+"【管理员】%s" NOR,
@@ -55,7 +55,7 @@ mapping channels = ([
 		"channel": "gwiz",
 		"msg_color": NOR+HIY,
 		"filter": 1,
-		"omit_address": 0, 
+		"omit_address": 0,
 	]),
     "es":   ([  "msg_speak": NOR+BOLD+"【网际闲聊】"+NOR+BOLD+"%s：%s\n" NOR,
 		"msg_emote": NOR+BOLD+"【网际闲聊】"+NOR+BOLD+"%s" NOR,
@@ -64,16 +64,16 @@ mapping channels = ([
 		"intermud_emote": 1,
 		"channel": "es",
 		"filter": (: $1["ENCODING"] == MUDLIB_ENCODING :),
-		"omit_address": 0, 
+		"omit_address": 0,
 	]),
 	"gbwiz":([
 		"msg_speak": BOLD "【大陆巫师】%s：%s\n" NOR,
 		"msg_emote": BOLD "【大陆巫师】%s" NOR,
 		"msg_color": BOLD,
 		"intermud": GCHANNEL,
-		"intermud_emote": 1, 
+		"intermud_emote": 1,
 		"channel": "gbwiz",
-		"omit_address": 0, 
+		"omit_address": 0,
 		"filter": (: $1["ENCODING"] == MUDLIB_ENCODING :),
 	]),
 	"debug":([  "msg_speak": HIW "【调试】%s：%s\n" NOR,
@@ -126,7 +126,7 @@ int do_unlock(string chn)
 		lock_chn=lock_chn - ({chn});
 	return 1;
 }
-	
+
 varargs int do_channel(object me, string verb, string arg, int emote,int remote)
 {
     object *ob;
@@ -170,15 +170,15 @@ varargs int do_channel(object me, string verb, string arg, int emote,int remote)
 			return 1;
 		}
 	}
-		
-	// check if this channel support emote message. 
-	if( emote && undefinedp(channels[verb]["msg_emote"])  ) 
+
+	// check if this channel support emote message.
+	if( emote && undefinedp(channels[verb]["msg_emote"])  )
 	{
 		write("对不起，这个频道不支持 emote 。\n");
         return 1;
     }
 	//now we can be sure it's indeed a channel message:
-	if (!stringp(arg) || arg == "" || arg == " ") 
+	if (!stringp(arg) || arg == "" || arg == " ")
 		arg = "...";
 	else
 		arg_bk = arg;
@@ -193,7 +193,7 @@ varargs int do_channel(object me, string verb, string arg, int emote,int remote)
 		if(time()-(int)me->query("chblk_channel/"+verb)<3600)
 			return notify_fail(HIW"你的"HIR+verb+HIW"被关闭了！\n");
 	}
-	if( userp(me) ) 
+	if( userp(me) )
 	{
 		if( channels[verb]["wiz_only"] && !wizardp(me))
 			return 0;
@@ -234,7 +234,7 @@ varargs int do_channel(object me, string verb, string arg, int emote,int remote)
 	if( emote  && me->is_character() && !remote)
 	{
 		string vb, emote_arg, id, mud;
-        if( sscanf(arg, "%s %s", vb, emote_arg)!= 2 ) 
+        if( sscanf(arg, "%s %s", vb, emote_arg)!= 2 )
 		{
 			vb = arg;
 			emote_arg = "";
@@ -250,14 +250,14 @@ varargs int do_channel(object me, string verb, string arg, int emote,int remote)
 			arg = EMOTE_D->do_emote(me, vb, emote_arg, 3);
 		else if( verb == "rumor" && random(10)<8 )
 			arg = EMOTE_D->do_emote(me, vb, emote_arg, 2, channels[verb]["anonymous"]);
-		else 
+		else
 			arg = EMOTE_D->do_emote(me, vb, emote_arg, 1);
-        if (!arg && emote) 
+        if (!arg && emote)
 		{
 			// we should only allow chinese emote.
 			if( (int)vb[0] < 160 ) return 0;
 				arg = sprintf("%s(%s@%s)%s\n",me->name(),me->query("id"),Mud_name(),arg_bk);
-			if( verb == "rumor" ) 
+			if( verb == "rumor" )
 			{
 				if( userp(me) )
 					arg = sprintf("%s%s\n",channels[verb]["anonymous"],vb);
@@ -265,17 +265,17 @@ varargs int do_channel(object me, string verb, string arg, int emote,int remote)
 		}
 		if( !arg )
 		{
-			if( channels[verb]["anonymous"] ) 
-				arg = channels[verb]["anonymous"]+vb+" "+emote_arg+"\n"; 
+			if( channels[verb]["anonymous"] )
+				arg = channels[verb]["anonymous"]+vb+" "+emote_arg+"\n";
 			else if( channels[verb]["intermud_emote"] )
 				arg = sprintf("%s(%s@%s)%s %s\n", me->name(1),
 					capitalize(me->query("id")), INTERMUD_MUD_NAME, vb, emote_arg);
-			else 
-				arg = me->name()+vb+" "+emote_arg+"\n"; 
+			else
+				arg = me->name()+vb+" "+emote_arg+"\n";
 		}
 	}
 	// Make the identity of speaker.
-	if( channels[verb]["anonymous"] ) 
+	if( channels[verb]["anonymous"] )
 	{
 		who = channels[verb]["anonymous"];
 		if (userp(me))
@@ -295,7 +295,7 @@ varargs int do_channel(object me, string verb, string arg, int emote,int remote)
 	if (verb=="party")
 	{
 		if (!me->query("family/family_name"))
-			return notify_fail(HIY"你还没有加入任何门派！\n"NOR); 
+			return notify_fail(HIY"你还没有加入任何门派！\n"NOR);
 		ob=filter_array( users(), "family_listener", this_object(), me->query("family/family_name") );
 	}
 	else
@@ -352,8 +352,8 @@ int filter_listener(object ppl, mapping ch)
 		if( userp(ppl) )
 			if( wiz_level(ppl) < wiz_level("(admin)") )
 				return 0;
-	if( ch["wiz_only"] ) 
-		if( userp(ppl) )    
+	if( ch["wiz_only"] )
+		if( userp(ppl) )
 			return wizardp(ppl);
 	if( ch["es_only"] )
 	{

@@ -9,8 +9,8 @@
 
 #define MAX_OPPONENT	4
 
-static object *enemy = ({});
-static string *killer = ({});
+nosave object *enemy = ({});
+nosave string *killer = ({});
 
 // prototypes
 
@@ -40,7 +40,7 @@ void fight_ob(object ob)
 
 	set_heart_beat(1);
 
-	if( member_array(ob, enemy)==-1 ) 
+	if( member_array(ob, enemy)==-1 )
 		enemy += ({ ob });
 }
 
@@ -142,11 +142,11 @@ void reset_action()
 
         me = this_object();
 	prepare = query_skill_prepare();
-	
+
 	if( ob = query_temp("weapon") ) type = ob->query("skill_type");
 	else if ( sizeof(prepare) == 0)	type = "unarmed";
 	else if ( sizeof(prepare) == 1)	type = (keys(prepare))[0];
-	else if ( sizeof(prepare) == 2)	
+	else if ( sizeof(prepare) == 2)
 		type = (keys(prepare))[query_temp("action_flag")];
 
 
@@ -193,7 +193,7 @@ void init()
 	// launched by auto_fight() and saves some overhead.
 	if(	is_fighting()
 	||	!living(this_object())
-	||	!(ob = this_player()) 
+	||	!(ob = this_player())
 	||	environment(ob)!=environment()
 	||	!living(ob)
 	||	ob->query("linkdead") )
@@ -210,5 +210,5 @@ void init()
 	} else if( userp(ob) && (string)query("attitude")=="aggressive" ) {
 		COMBAT_D->auto_fight(this_object(), ob, "aggressive");
 		return;
-	} 
+	}
 }

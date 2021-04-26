@@ -5,8 +5,8 @@
 #define MaxY 30
 inherit F_CLEAN_UP;
 int X=7,Y=10;
-static mixed m;
-static string *rfile;
+nosave mixed m;
+nosave string *rfile;
 int draw_room(int,int,object);
 string clean_color(string arg)
 {
@@ -139,7 +139,7 @@ int draw_path(int x,int y,string direc)
 	m[x+xx][y+yy]=str;
 	return 1;
 }
-	
+
 int draw_room(int x,int y,object room)
 {
 	int i,nst=0,xx,yy;

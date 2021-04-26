@@ -2,7 +2,7 @@
 // From ES2
 // Adapted for XKX
 
-static mixed busy, interrupt;
+nosave mixed busy, interrupt;
 
 varargs void start_busy(mixed new_busy, mixed new_interrupt)
 {
@@ -22,7 +22,7 @@ nomask int is_busy()
 	//如果断线则强行设定为不忙！
 	if(this_object()->query_temp("netdead"))
 		return 0;
-	return busy!=0; 
+	return busy!=0;
 }
 
 // This is called by heart_beat() instead of attack() when a ppl is busy
@@ -61,7 +61,7 @@ void interrupt_me(object who, string how)
 // such recovery function call_out might be destroyed if some wizard
 // destructed the object that is reponsible of it, so we let users launch
 // the call_out themself. Thus we can make sure the recovery call_out.
-// 
+//
 // Because this could cause a serious security problem, so we need highest
 // security check here.
 int start_call_out(function fun, int delay)

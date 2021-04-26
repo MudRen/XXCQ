@@ -2,13 +2,13 @@
 
 #include <ansi.h>
 inherit ROOM;
-static int lianing;
+nosave int lianing;
 
 // 要练习的武功
-static string lian_skill;
+nosave string lian_skill;
 
 // 练习的招数索引
-static int zhao_index;
+nosave int zhao_index;
 //判断是否在练功的函数
 int is_lianing();
 //开始练功
@@ -79,13 +79,13 @@ int douzhuan(string arg)
 }
 
 int is_lianing()
-{       
+{
 	printf("hi\n");
 	return lianing;
 }
 
 void start_lian(string skill)
-{                                
+{
 	printf("hehe\n");
 	zhao_index = 0;
 	lianing = 1;
@@ -140,5 +140,3 @@ void do_lian()
 		return;
 	}
 }
-
-

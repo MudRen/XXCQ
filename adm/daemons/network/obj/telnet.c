@@ -12,8 +12,8 @@
 
 inherit ITEM;
 
-static int my_socket,socket1,socket2;
-static object me;
+nosave int my_socket,socket1,socket2;
+nosave object me;
 
 void create()
 {
@@ -32,7 +32,7 @@ void create()
 }
 
 void init()
-{       
+{
         object ob;
 
         if( interactive(ob = this_player()) ) {
@@ -104,5 +104,3 @@ int write_message(string arg)
         socket_write(my_socket,arg+"\n");
         return 1;
 }
-
-

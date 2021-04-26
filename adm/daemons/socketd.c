@@ -12,32 +12,32 @@
 
 inherit F_DBASE;
 //建立连接使用的socket号和发送标志
-static int my_socket;
+nosave int my_socket;
 //问题在于如何判断断线？！
 
-static int session_id=0;
-static mapping cur_session=([]);// object sob,string cmd
-static int cur_sid=0;
-static int timeout_running=0;
-static string server_ip="127.0.0.1";
-static string server_port="8848";
+nosave int session_id=0;
+nosave mapping cur_session=([]);// object sob,string cmd
+nosave int cur_sid=0;
+nosave int timeout_running=0;
+nosave string server_ip="127.0.0.1";
+nosave string server_port="8848";
 
-static string password="pass";
+nosave string password="pass";
 object requst_ob;
 
 int write_message(string);
 int do_connect(string arg);
 void chat(string arg,string opt);
 
-static int add_lock=0;
+nosave int add_lock=0;
 
-static int doing=0;
-static int connected=0;
-static int logined=0;
-static int do_session_flag=0;
-static int waiting=0;//等待口令验证
+nosave int doing=0;
+nosave int connected=0;
+nosave int logined=0;
+nosave int do_session_flag=0;
+nosave int waiting=0;//等待口令验证
 
-static string buff="";
+nosave string buff="";
 int del_session(string sid)
 {
 	chat("准备删除sid为:"+sid+" 的任务","debug");
@@ -60,7 +60,7 @@ void process(mixed msg)
 {
 	string sid,*msgarr;
 	mapping tmps=([]);
-	
+
 	if(!stringp(msg))
 	{
 		chat("收到非字符串返回值","sys");
@@ -243,7 +243,7 @@ varargs string show_session(string sid)
 	else
 	{
 		//单独显示指定的任务
-		
+
 	}
 	return tmp;
 }

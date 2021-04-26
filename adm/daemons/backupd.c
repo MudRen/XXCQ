@@ -8,7 +8,7 @@ inherit F_DBASE;
 
 #define BACKUP_DATE     7               // the oldest's backup (days)
 
-static int state;
+nosave int state;
 
 #define SLEEPING        0
 #define GET_READY       1
@@ -18,8 +18,8 @@ static int state;
 #define ADM_CMD_RM      "/cmds/adm/zrm"
 #define ADM_CMD_CP      "/cmds/adm/zcp"
 
-static int *tlist = ({ 0,450,459,500});
-static int *hlist = ({ 45, 1, 1, 1 });
+nosave int *tlist = ({ 0,450,459,500});
+nosave int *hlist = ({ 45, 1, 1, 1 });
 
 // 通知一次准备的时间：凌晨4:50分
 // 通知再次准备的时间：凌晨4:59分

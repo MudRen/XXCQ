@@ -1,13 +1,13 @@
 // syz.c
 #include <ansi.h>
 inherit ROOM;
-static int lianing;
-static int tick;
+nosave int lianing;
+nosave int tick;
 // 要练习的武功
-static string lian_skill;
+nosave string lian_skill;
 
 // 练习的招数索引
-static int zhao_index;
+nosave int zhao_index;
 //判断是否在练功的函数
 int is_lianing();
 //开始练功
@@ -41,7 +41,7 @@ int is_lianing()
 }
 
 void start_lian(string skill)
-{       
+{
 	object me = this_player();
 	zhao_index = 0;
 	lianing = 1;
@@ -50,7 +50,7 @@ void start_lian(string skill)
 }
 
 void stop_lian()
-{              
+{
 	object me = this_player();
 	lianing = 0;
 	if ( me->is_busy() )
@@ -67,7 +67,7 @@ void do_lian()
 	object me, weapon, skill;
 	mapping action;
 
-	me = this_player();   
+	me = this_player();
 	seteuid(getuid(me));
 
 	me->set_heart_beat(1);
@@ -77,7 +77,7 @@ void do_lian()
 	skill_basic = me->query_skill(lian_skill, 1);
 	skill_int = me->query_skill(lian_skill, 1);
 
-	if( SKILL_D(skillname)->practice_skill(me) ) 
+	if( SKILL_D(skillname)->practice_skill(me) )
 	{
 			me->improve_skill(skillname, skill_basic/5 +1, skill_basic > skill_int? 0: 1);
 
@@ -97,7 +97,7 @@ void do_lian()
 			}
 	}
 	else{
-		msg = sprintf( HIY"【练功】"NOR+"$N气收丹田, 练完了【%s】。\n", to_chinese( skillname) );	
+		msg = sprintf( HIY"【练功】"NOR+"$N气收丹田, 练完了【%s】。\n", to_chinese( skillname) );
 		message_vision( msg, me );
 		lianing = 0;
 		return;
@@ -136,12 +136,11 @@ int yanxi(string arg)
 	if( !SKILL_D(skillname)->valid_learn(me) ) return 0;
 	notify_fail("你试着练习" + to_chinese(skillname) + "，但是并没有任何进步。\n");
 
-	if( SKILL_D(skillname)->practice_skill(me) ) 
-	{	
+	if( SKILL_D(skillname)->practice_skill(me) )
+	{
 		message_vision( HIY"【练功】"NOR"$N摆开了练功的架式，准备开始练习"+to_chinese(skillname)+"。\n", me );
 	        me->start_lian(arg);
 		return 1;
 	}
         return 1;
 }
-

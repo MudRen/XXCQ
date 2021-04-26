@@ -8,8 +8,8 @@
 // #define LANGUAGE_D	"/adm/daemons/languaged.c" at globals.h
 // Ported to by ken@chinesemud.net at 1998/05/18
 
-#pragma optimize
-#pragma save_binary
+// #pragma optimize
+// #pragma save_binary
 
 //inherit F_CLEAN_UP;
 

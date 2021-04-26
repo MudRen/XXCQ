@@ -7,7 +7,7 @@
 inherit F_DBASE;
 inherit F_CLEAN_UP;
 
-static mapping doors;
+nosave mapping doors;
 
 int query_max_encumbrance() { return 100000000000; }
 
@@ -57,7 +57,7 @@ void reset()
     int i,j;
     //
     // Check loaded objects to match the objects specified in "objects"
-    // while query("objects") is 
+    // while query("objects") is
     // ([ <object filename>: <amount>, ..... ])
     // and query_temp("objects") is
     // ([ <object filename>: ({ob1, ob2, ...}), .... ])
@@ -65,7 +65,7 @@ void reset()
     ob_list = query("objects");
     new_clean_up(ob_list);
     if( !mapp(ob_list) ) return;
-    
+
     if( !mapp(ob = query_temp("objects")) )
         ob = allocate_mapping(sizeof(ob_list));
     list = keys(ob_list);
@@ -85,7 +85,7 @@ void reset()
         default:
             for(j=0; j<ob_list[list[i]]; j++) {
                 // If the object is gone, make another one.
-                if( !objectp(ob[list[i]][j]) ) { 
+                if( !objectp(ob[list[i]][j]) ) {
                     ob[list[i]][j] = make_inventory(list[i],j) ;
                 }
             if (ob[list[i]][j]->is_character() && !ob[list[i]][j]->is_corpse()){

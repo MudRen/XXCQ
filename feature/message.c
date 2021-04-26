@@ -5,8 +5,8 @@
 
 #define MAX_MSG_BUFFER 500
 
-static string *msg_buffer = ({});
-static int written = 0;
+nosave string *msg_buffer = ({});
+nosave int written = 0;
 
 // status of written
 #define NONE		    0
@@ -14,7 +14,7 @@ static int written = 0;
 #define COMMAND_RCVD	    2
 
 // What's about flag variable: written ?
-// After I written a prompt ">" on the screen, mabye the 
+// After I written a prompt ">" on the screen, mabye the
 // user has not input command but receive message. So the
 // screen may be show as "> YOU ARE RECEIVE MESSAGE"
 // that's bad! On this case, I want clear the "> ", so I

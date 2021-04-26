@@ -22,19 +22,19 @@
 
 inherit F_DBASE;
 
-static int httpSock;
-static int persistent;
-static int accesses;
+nosave int httpSock;
+nosave int persistent;
+nosave int accesses;
 
-static mapping sockets;
-static mapping resolve_pending;
+nosave mapping sockets;
+nosave mapping resolve_pending;
 
-static string *months;
+nosave string *months;
 
-static mapping bad_cmd = BAD_CMD;
-static mapping access_denied = ACCESS_DENIED;
-static mapping not_found = NOT_FOUND;
-static mapping bad_gateway = BAD_GATEWAY;
+nosave mapping bad_cmd = BAD_CMD;
+nosave mapping access_denied = ACCESS_DENIED;
+nosave mapping not_found = NOT_FOUND;
+nosave mapping bad_gateway = BAD_GATEWAY;
 
 
 protected string common_date(int);
@@ -60,7 +60,7 @@ int query_accesses()
 }
 
 void create()
-{ 
+{
 	seteuid( ROOT_UID );
 	set("channel_id","ÏµÍ³¾«Áé");
 	accesses = 0;
@@ -369,7 +369,7 @@ void close_connection(int fd)
 
 // respond to a client request for a file.
 //
-    
+
 void do_get(int fd, string file, string line0)
 {
 	string dir;
@@ -449,6 +449,6 @@ int file_exists(string str)
 {
    if (file_length(str)>0)
      return 1;
-   else 
+   else
      return 0;
 }

@@ -8,12 +8,12 @@ inherit CHARACTER;
 inherit F_AUTOLOAD;
 inherit F_SAVE;
 inherit F_ENCODING;
-static int last_age_set = 0;            // 上一次更新AGE的时间
-static int user_say = 0;                // 一定时间以内玩家做的say-action
-static int user_command = 0;            // 一定时间以内玩家发送的命令
-static int at_time = 0;                 // 在什么时间计算的
-static int ban_to = 0;                  // 在什么时间解禁玩家
-static int attach_flag = 0;             // 是否正在和系统联络
+nosave int last_age_set = 0;            // 上一次更新AGE的时间
+nosave int user_say = 0;                // 一定时间以内玩家做的say-action
+nosave int user_command = 0;            // 一定时间以内玩家发送的命令
+nosave int at_time = 0;                 // 在什么时间计算的
+nosave int ban_to = 0;                  // 在什么时间解禁玩家
+nosave int attach_flag = 0;             // 是否正在和系统联络
 
 #define DEFAULT_PRISON          "/d/sroom/jianyu"
 
@@ -217,7 +217,7 @@ int query_neili_limit()
 
         skill_names = keys(skills);
 
-        base_lvl = ((int) skills["force"]) / 2; 
+        base_lvl = ((int) skills["force"]) / 2;
         neili_limit = base_lvl * 10;
         for (i = 0; i < sizeof(skill_names); i++)
         {
@@ -250,7 +250,7 @@ int query_current_neili_limit()
         {
                 neili += (int)query_skill(force, 1) * 10;
                 neili += SKILL_D(force)->query_neili_improve(this_object());
-        }    
+        }
 
         return neili;
 }

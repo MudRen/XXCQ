@@ -5,11 +5,11 @@
 inherit F_TREEMAP;
 
 mapping dbase;
-static mapping tmp_dbase;
+nosave mapping tmp_dbase;
 
 //	The default_ob provides the default values of the dbase. It is set to
 //	be master copy of an object.
-static mixed default_ob;
+nosave mixed default_ob;
 
 mixed query_default_object() { return default_ob; }
 void set_default_object(mixed ob)
@@ -27,7 +27,7 @@ mixed set(string prop, mixed data)
 
 	if( strsrch(prop, '/')!=-1 )
 		return _set( dbase, explode(prop, "/"), data );
-	
+
 	return dbase[prop] = data;
 }
 
@@ -106,7 +106,7 @@ varargs mixed query_temp(string prop, int raw)
 
 	if( functionp(data) && !raw )
 		return (*data)( this_object() );
-	else 
+	else
 		return data;
 }
 
@@ -142,4 +142,3 @@ mapping query_entire_temp_dbase()
 
 	return tmp_dbase;
 }
-

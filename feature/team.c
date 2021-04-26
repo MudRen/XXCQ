@@ -4,7 +4,7 @@
 #include <dbase.h>
 #include <origin.h>
 
-static object leader, *team;
+nosave object leader, *team;
 
 int set_leader(object ob)
 {
@@ -71,7 +71,7 @@ varargs int dismiss_team(object ob)
 	int i;
 
 	if( !arrayp(team) ) return 0;
-	
+
 	if( !ob ) {
 		if( team[0]==this_object() ) {
 			for(i=1; i<sizeof(team); i++)
@@ -91,4 +91,3 @@ object *query_team()
 {
 	return team;
 }
-

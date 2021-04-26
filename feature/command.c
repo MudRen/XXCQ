@@ -8,7 +8,7 @@
 
 // Let command path be static, thus we can make sure no one can get command
 // path directly from restore_object().
-static string *path;
+nosave string *path;
 
 // Leave this to allow other objects can search your commands such as
 // help, which...
@@ -45,13 +45,13 @@ protected nomask int command_hook(string arg)
         verb = query_verb();
         if ((verb = remove_leading_space(verb)) == "")
                 return 0;
-        if( !arg 
+        if( !arg
         &&      (environment() && stringp(environment()->query("exits/" + verb)))
         &&      stringp(file = find_command("go"))
         &&      call_other(file, "main", this_object(), verb))
                 ;
-        
-        else if( stringp(file = find_command(verb)) 
+
+        else if( stringp(file = find_command(verb))
         && call_other(file, "main", this_object(), arg))
                 ;
 
@@ -100,7 +100,7 @@ nomask void enable_player()
         add_action("command_hook", "", 1);
         if( !userp(this_object()) )
                 set_path(NPC_PATH);
-        else 
+        else
         switch( wizhood(this_object()) ) {
                 case "(admin)":
                         set_path(ADM_PATH);

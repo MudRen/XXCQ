@@ -32,7 +32,7 @@ inherit F_SKILL;
 inherit F_TEAM;
 inherit F_COMPETE;
 // Use a tick with longer period than heart beat to save cpu's work
-static int tick;
+nosave int tick;
 
 void create()
 {
@@ -69,7 +69,7 @@ void heart_beat()
 		{
 			write_prompt();
 		}
-		
+
 	}
 	// If we are dying because of mortal wounds?
 	if( my["eff_qi"] < 0) {
@@ -85,7 +85,7 @@ void heart_beat()
 		else unconcious();
 		return;
 	}
-	
+
 	//如果当精力为零时，人物不会晕倒，但是会不能行动！下面为标记。
 	//但是好象还没起作用
 	if( my["jingli"] <= 0 || my["eff_jingli"] <= 0)
@@ -114,7 +114,7 @@ void heart_beat()
 	if( !userp(this_object()) ) {
 		this_object()->chat();
 		// chat() may do anything -- include destruct(this_object())
-		if( !this_object() ) return;	
+		if( !this_object() ) return;
 	}
 
 	if( tick--  ) return;
@@ -126,7 +126,7 @@ void heart_beat()
 	// heal_up() must be called prior to other two to make sure it is called
 	// because the && operator is lazy :P
 	if( ((cnd_flag & CND_NO_HEAL_UP) || !heal_up())
-	&&	!is_fighting() 
+	&&	!is_fighting()
 	&&	!interactive(this_object()))
 	{
 		if( environment() )

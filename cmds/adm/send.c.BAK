@@ -7,7 +7,7 @@
 
 inherit F_DBASE;
 
-static int my_socket=0;
+nosave int my_socket=0;
 
 //程序中一旦出现错误就直接返回出错信息
 int do_connect(string arg);
@@ -44,13 +44,13 @@ int do_connect(string arg)
 	if( query("connected") )
 		socket_close(my_socket);
 	my_socket = socket_create( STREAM, "in_read_callback","in_close_callback" );
-	if ( my_socket < 0 ) 
+	if ( my_socket < 0 )
 	{
 		chat("创建socket失败。\n","debug");
 		return 1;
 	}
 	err = socket_connect( my_socket, arg , "read_callback","write_callback" );
-	if( err==EESUCCESS ) 
+	if( err==EESUCCESS )
 	{
 		chat("已经连接" + arg + "\n","debug");
 		set("connected",1);
@@ -73,7 +73,7 @@ int close_socket()
 {
 	if( query("connected") )
 	{
-		if( socket_close(my_socket) ) 
+		if( socket_close(my_socket) )
 		{
 			chat("关闭socket，恢复断线状态。\n","debug");
 			delete("connected");
@@ -97,7 +97,7 @@ void read_callback(int nouse,mixed message)
         message = "→" + message;
         chat( (string) message ,"sys");
         close_socket();//只收一句回应！
-        
+
 }
 
 void write_callback(int fd)

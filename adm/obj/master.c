@@ -9,7 +9,7 @@ object connect()
 {
 	object login_ob;
 	mixed err;
-   
+
 	err = catch(login_ob = new(LOGIN_OB));
 
 	if (err) {
@@ -100,24 +100,30 @@ void preload(string file)
 		write(" -> Error " + err + " when loading " + file + "\n");
 	else
 		write(".... Done.\n");
-		
+
 }
 
 // Write an error message into a log file. The error occured in the object
 // 'file', giving the error message 'message'.
 void log_error(string file, string message)
 {
-	string name, home;
-   
-	if( find_object(SIMUL_EFUN_OB) )
-		name = file_owner(file);
-
-	if (name) home = user_path(name);
-	else home = LOG_DIR;
-
-	if(this_player(1)) efun::write("编译时段错误：" + message+"\n");
-	
-	efun::write_file(home + "log", message);
+	if (strsrch(message, "Warning") == -1)
+	{
+		if (this_player(1))
+		{
+			if (wizardp(this_player(1)))
+				efun::write("编译时段错误：" + message + "\n");
+			else
+				efun::write(get_config(11) + "\n");
+		}
+		// 记录错误日志
+		efun::write_file(LOG_DIR + "log_error", message);
+	}
+	else
+	{
+		// 记录警告日志
+		efun::write_file(LOG_DIR + "log", message);
+	}
 }
 
 // save_ed_setup and restore_ed_setup are called by the ed to maintain
@@ -126,7 +132,7 @@ void log_error(string file, string message)
 int save_ed_setup(object who, int code)
 {
 	string file;
-  
+
     if (!intp(code))
         return 0;
     file = user_path(getuid(who)) + ".edrc";
@@ -140,7 +146,7 @@ int retrieve_ed_setup(object who)
 {
    string file;
    int code;
-  
+
     file = user_path(getuid(who)) + ".edrc";
     if (file_size(file) <= 0) {
         return 0;
@@ -245,10 +251,10 @@ int valid_shadow( object t) { return 0; }
 int valid_override( string file, string name )
 {
 	string *overrides;
-	//thanks Find@TX tell me to protect these function! 
+	//thanks Find@TX tell me to protect these function!
 	// jackyboy 99-11-16
 	overrides = ({"shutdown","localtime","ctime","exec","snoop"});
-	
+
 	// simul_efun can override any simul_efun by Annihilator
 	if (file == SIMUL_EFUN_OB || file==MASTER_OB)
 		return 1;
@@ -259,7 +265,7 @@ int valid_override( string file, string name )
 		log_file("efun","在文件"+file+"里有对"+name+"的非法调用！\n");
 		return 0;
 	}
-	
+
 	//Must use shutdown,localtime,exec,ctime,snoop from SIMUL_EFUN_OB
 	if( member_array(name,overrides) != -1 )
 	{
@@ -327,7 +333,7 @@ int valid_save_binary( string  t)
 }
 
 // valid_write: write privileges; called with the file name, the object
-//   initiating the call, and the function by which they called it. 
+//   initiating the call, and the function by which they called it.
 int valid_write( string file, mixed user, string func )
 {
 	object ob;

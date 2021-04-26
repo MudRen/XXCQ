@@ -6,8 +6,8 @@
 #include <room.h>
 #include <ansi.h>
 
-static int weight = 0;
-static int encumb = 0, max_encumb = 0;
+nosave int weight = 0;
+nosave int encumb = 0, max_encumb = 0;
 
 nomask int query_encumbrance() { return encumb; }
 nomask int over_encumbranced() { return encumb > max_encumb; }
@@ -92,7 +92,7 @@ varargs int move(mixed dest, int silently)
         // If we are players, try look where we are.
         if( interactive(this_object())          // are we linkdead?
         &&      living(this_object())           // are we still concious?
-        &&      !silently ) 
+        &&      !silently )
         {
         	if(stringp(query("env/brief")))//避免set brief 字符
         	{
@@ -118,7 +118,7 @@ varargs int move(mixed dest, int silently)
 						str+="- "+file_name(environment());
 					str+="\n";
 					inv = all_inventory(environment());
-					for(i=0; i<sizeof(inv); i++) 
+					for(i=0; i<sizeof(inv); i++)
 					{
 						if( inv[i]==this_object() ) continue;
 						if( inv[i]->query("no_shown")) continue;
@@ -134,7 +134,7 @@ varargs int move(mixed dest, int silently)
 					if(wizardp(this_object()))
 						str+="- "+file_name(environment());
 					str+="\n";
-					if( mapp(exits = environment()->query("exits")) ) 
+					if( mapp(exits = environment()->query("exits")) )
 					{
 						dirs = keys(exits);
 						for(i=0; i<sizeof(dirs); i++)
@@ -151,7 +151,7 @@ varargs int move(mixed dest, int silently)
 					}
 					else    str += "    这里没有任何明显的出路。\n";
 					inv = all_inventory(environment());
-					for(i=0; i<sizeof(inv); i++) 
+					for(i=0; i<sizeof(inv); i++)
 					{
 						if( inv[i]==this_object() ) continue;
 						if( inv[i]->query("no_shown")) continue;
@@ -192,4 +192,3 @@ int move_or_destruct( object )
                 move(VOID_OB);
         }
 }
-

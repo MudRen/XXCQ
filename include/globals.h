@@ -2,13 +2,12 @@
 // this file will be automatically included by the driver
 // for XKX mudlib, by Xiang
 
-// 升级MUDOS为v22.1b20而增加的转换，另外master.c里可能有些nosave要转换为protected
-#ifdef __SENSIBLE_MODIFIERS__
-#define private protected
-#define static nosave
+#ifndef __SENSIBLE_MODIFIERS__
+#define protected static
+#define nosave static
 #endif
 //added by DayDream
-#define SAVE_EXTENSION __SAVE_EXTENSION__ 
+#define SAVE_EXTENSION __SAVE_EXTENSION__
 //Solove the problem of MudOS version
 #define NO_MUDLIST 0
 // Add by Find for maze.
@@ -21,12 +20,12 @@
 //added by Doing @ CCTX
 #define PRIVATE_ROOM	"/inherit/private_room.c"
 #define RECORDABLE_ROOM	"/inherit/recordable_room.c"
-#define ROOM_D		"/adm/daemons/roomd.c"	
+#define ROOM_D		"/adm/daemons/roomd.c"
 
 // 增加帮会的函数调用 adx @ CCTX
 #define BANGHUI_D       "/adm/daemons/banghuid" //帮会
 #define F_BUKUAI        "/feature/bukuai"       //捕快
-	
+
 //added by JackyBoy @ CCTX
 #define USERS   "/adm/etc/users"
 #define IDUSER  "/adm/etc/iduser"
@@ -176,7 +175,7 @@
 #define F_COMPETE		"/feature/compete.c"
 // Profiling switches
 //
-// If you changed any of these defines, you'll need reboot to make it 
+// If you changed any of these defines, you'll need reboot to make it
 // in effect.
 
 #undef PROFILE_COMMANDS

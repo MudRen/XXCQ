@@ -1,6 +1,6 @@
 #include <ansi.h>
-static string *text;
-static int f,line;
+nosave string *text;
+nosave int f,line;
 void more(string cmd)
 {
 	int i;
@@ -54,4 +54,3 @@ void start_more(string msg)
 	f=0,line=0;
 	more("");
 }
-

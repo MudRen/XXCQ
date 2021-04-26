@@ -17,7 +17,7 @@ email属性：
 
 //检查是否有待发邮件的间隔时间，以秒为单位
 #define CK_DELAY 60*1
-	
+
 #include <ansi.h>
 #include <net/dns.h>
 #include <net/telnet.h>
@@ -29,17 +29,17 @@ email属性：
 inherit F_SAVE;
 inherit F_DBASE;
 //建立连接使用的socket号和发送标志
-static int my_socket,status=0,scount=0;
+nosave int my_socket,status=0,scount=0;
 //缺省的发送邮件服务器地址
-static mapping d_smtp=([
+nosave mapping d_smtp=([
 	"ip":"202.96.104.8",
 	"port":"25",
 	"name":"pub.cnnb.net",
 	]);
 //正式使用的发送邮件服务器地址
-static mapping smtp;
+nosave mapping smtp;
 //邮件的收件人，发件人，主题和信息！
-static string rcpt_to,mail_from,subject,msg,en;
+nosave string rcpt_to,mail_from,subject,msg,en;
 
 int write_message(string);
 
@@ -73,7 +73,7 @@ int add_email(string m_from,string r_to,string title,string msg,mixed smtp)
 {
 	string tmp_en;
 	mapping tmp_em;
-	
+
 	tmp_em=([]);
 	//应该检查地址和信息的合法性！
 	tmp_en=CHINESE_D->chinese_time(5,ctime(time()));
@@ -120,7 +120,7 @@ int close_socket()
 {
 	if( query("connected") )
 	{
-		if( socket_close(my_socket) ) 
+		if( socket_close(my_socket) )
 		{
 			chat("关闭socket，恢复断线状态。\n","debug");
 			delete("connected");
@@ -146,13 +146,13 @@ int do_telnet(string arg)
 	if( query("connected") )
 		socket_close(my_socket);
 	my_socket = socket_create( STREAM, "in_read_callback","in_close_callback" );
-	if ( my_socket < 0 ) 
+	if ( my_socket < 0 )
 	{
 		chat("创建socket失败。\n","debug");
 		return 1;
 	}
 	err = socket_connect( my_socket, arg , "read_callback","write_callback" );
-	if( err==EESUCCESS ) 
+	if( err==EESUCCESS )
 	{
 		chat("已经连接" + arg + "\n","debug");
 		set("connected",1);
@@ -222,14 +222,14 @@ void read_callback(int ,mixed message)
     			chat("Smtp Server接收数据出错！请另选服务器。\n","sys");
     		else
     			chat("信件已经正确发送了!\n","debug");
-    		break;    			
+    		break;
     }
     if(status!=5||!sscanf(message,"250%*s"))
     	chat("发送出错","sys");
     status=0;
 	write_message("QUIT");
 	close_socket();
-	return ;     			
+	return ;
 }
 
 void write_callback(int fd)
@@ -237,7 +237,7 @@ void write_callback(int fd)
 	int res;
 	if(query("connect"))return ;
 	res = socket_write( fd,"");
-	if (res == EESUCCESS || res == EECALLBACK) 
+	if (res == EESUCCESS || res == EECALLBACK)
 		set("connected",1);
 }
 
@@ -251,7 +251,7 @@ void send_email()
 {
 	mapping email;
 	string ATTACH;
-	
+
 	if(!stringp(en))
 		return;
 	if(!email=query("email/"+en))
@@ -334,4 +334,3 @@ void check_email()
 	call_out("check_email",10,this_object());
 	//一般才发了信的话应该马上检查一编！
 }
-

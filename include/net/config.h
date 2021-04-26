@@ -12,15 +12,9 @@
 #define MUDLIST_DNS ({ "182.16.0.215",5555})
 // The Eastern Stories
 #define MUDLIST_BAK ({ "10.163.180.6",7001})
-#define LISTNODES ([ \
-"chat":"182.16.0.215 8004",\
-])
+#define LISTNODES ([ "chat":"182.16.0.215 8004",])
 //不接受下面站点的es信息
-#define BANDLIST ([\
-"cctx.gy":"10.157.11.254 6973",\
-"cuterabbit":"10.163.180.6 7004",\
-"cctx":"10.162.1.195 6973",\
-])
+#define BANDLIST (["cctx":"10.162.1.195 6973",])
 //下面的IP是BIG5站点
 #define Big5IP ({ "140","192","207","209","203", "210", "129", "208", "206", "139" })
 /* This is the default packet size of outgoing mail messages.  The ideal
@@ -28,7 +22,7 @@
  * udp packet size.  Probably best kept at 512
  */
 #define MAIL_PACKET_SIZE        512
- 
+
 /* These macros are for the name service.  They determine how often the
  * database is refreshed, how often other muds are checked, how often
  * the sequence list is checked for timed out services, and how long a

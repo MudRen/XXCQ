@@ -2,8 +2,8 @@
 #include <ansi.h>
 #define TIME_TICK (time()*60)
 
-static int current_day_phase;
-static string day_file;
+nosave int current_day_phase;
+nosave string day_file;
 mapping *day_phase;
 mapping *read_table(string);
 void init_day_phase();
@@ -68,7 +68,7 @@ string toColor(string arg)
 	}
 	return arg;
 }
-		
+
 int night()
 {
 	return (strsrch(CHINESE_D->chinese_date(TIME_TICK), "子时") >= 0) ||
@@ -76,7 +76,7 @@ int night()
 	(strsrch(CHINESE_D->chinese_date(TIME_TICK), "寅时") >= 0) ||
 	(strsrch(CHINESE_D->chinese_date(TIME_TICK), "亥时") >= 0);
 }
-     
+
 void update_day_phase()
 {
     object *user=users();
@@ -94,7 +94,7 @@ void update_day_phase()
         call_other(this_object(), day_phase[current_day_phase]["event_fun"]);
     }
     call_out("update_day_phase", day_phase[current_day_phase]["length"]);
-   	if(current_day_phase==2) 
+   	if(current_day_phase==2)
    	{
    		CHANNEL_D->do_channel(this_object(),"sys","系统自动清除 " + reclaim_objects() + " 个变数。\n");
 	    remove_call_out("auto_save");
@@ -299,8 +299,8 @@ mapping *query_day_phase() { return day_phase; }
 void auto_save(object *user, int size, int i)
 {
     int j;
-    
-    for(j=i;j<i+5;j++) 
+
+    for(j=i;j<i+5;j++)
     {
 		if(j>=size) return;
 		if(!user[j]) continue;

@@ -3,7 +3,7 @@
 // GB:   0
 // BIG5: 1
 
-static int chinese_encoding=0;
+nosave int chinese_encoding=0;
 
 int query_encoding() {return chinese_encoding;}
 

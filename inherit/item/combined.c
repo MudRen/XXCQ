@@ -8,7 +8,7 @@ inherit F_DBASE;
 inherit F_MOVE;
 inherit F_NAME;
 
-static int amount;
+nosave int amount;
 
 void setup()
 {
@@ -59,4 +59,3 @@ varargs int move(mixed dest, int silent)
 		return 1;
 	}
 }
-

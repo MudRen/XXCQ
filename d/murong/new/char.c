@@ -32,19 +32,19 @@ inherit F_SKILL;
 inherit F_TEAM;
 
 // Use a tick with longer period than heart beat to save cpu's work
-static int tick;
+nosave int tick;
 
 
-//addit 
+//addit
 //addit
 // 用做布尔量, 指示角色是不是在练
-static int lianing;
+nosave int lianing;
 
 // 要练习的武功
-static string lian_skill;
+nosave string lian_skill;
 
 // 练习的招数索引
-static int zhao_index;
+nosave int zhao_index;
 //判断是否在练功的函数
 int is_lianing();
 //开始练功
@@ -98,7 +98,7 @@ void heart_beat()
 		return;
 	}
 
-	
+
 	if( my["qi"] < 0 || my["jing"] < 0||my["jingli"] < 0) {
 		remove_all_enemy();
 		if( !living(this_object()) ) die();
@@ -130,7 +130,7 @@ void heart_beat()
 	if( !userp(this_object()) ) {
 		this_object()->chat();
 		// chat() may do anything -- include destruct(this_object())
-		if( !this_object() ) return;	
+		if( !this_object() ) return;
 	}
 
 	if( tick--  ) return;
@@ -142,7 +142,7 @@ void heart_beat()
 	// heal_up() must be called prior to other two to make sure it is called
 	// because the && operator is lazy :P
 	if( ((cnd_flag & CND_NO_HEAL_UP) || !heal_up())
-	&&	!is_fighting() 
+	&&	!is_fighting()
 	&&	!interactive(this_object())	) {
 		if( environment() ) {
 			ob = first_inventory(environment());
@@ -226,7 +226,7 @@ void stop_lian()
 /*
 string *desc_skill = ({
 "你觉得这一招的练习还算马马乎乎。\n",
-"你觉得这一招的练习还算平常。\n",  
+"你觉得这一招的练习还算平常。\n",
 "你对这一招的练习还比较满意。\n",
 });
 */
@@ -237,13 +237,13 @@ void do_lian()
 	mapping action;
 	int jibie;
 	int skill_basic,skill_int;
-	this = this_object();   
+	this = this_object();
 //	desc = desc_skill[random(sizeof(desc_skill))];
 	skillname = this->query_skill_mapped(lian_skill);
 	skill_basic = this->query_skill(lian_skill, 1);
 	skill_int = this->query_skill(lian_skill, 1);
 
-	if( SKILL_D(skillname)->practice_skill(this) ) 
+	if( SKILL_D(skillname)->practice_skill(this) )
 	{
 			this->improve_skill(skillname, skill_basic/5 +1, skill_basic > skill_int? 0: 1);
 
@@ -263,7 +263,7 @@ void do_lian()
 			}
 	}
 	else{
-		msg = sprintf( HIY"【练功】"NOR+"$N气收丹田, 练完了【%s】。\n", to_chinese( skillname) );	
+		msg = sprintf( HIY"【练功】"NOR+"$N气收丹田, 练完了【%s】。\n", to_chinese( skillname) );
 		message_vision( msg, this );
 		lianing = 0;
 		return;
@@ -280,16 +280,3 @@ int random_move()
 	dirs = keys(exits);
 	command("go " + dirs[random(sizeof(dirs))]);
 }
-
-
-
-
-
-
-
-
-
-	
-
-	
-	

@@ -11,7 +11,7 @@
 inherit F_DBASE;
 inherit F_SAVE;
 
-static mapping wiz_status=([]);//
+nosave mapping wiz_status=([]);//
 
 string *wiz_levels = ({
 	"(player)",
@@ -25,10 +25,10 @@ string *wiz_levels = ({
 });
 
 //初始设置为空，然后在create()的时候从数据文件里读取进来
-static mapping trusted_write = ([]);
+nosave mapping trusted_write = ([]);
 mapping exclude_write = ([]);
-static mapping trusted_read = ([]);
-static mapping exclude_read = ([]);
+nosave mapping trusted_read = ([]);
+nosave mapping exclude_read = ([]);
 
 string query_save_file()
 {
@@ -68,7 +68,7 @@ void restore_list()
 		t_write=({ROOT_UID,"(admin)"});
 	set("trusted_read/\n",t_read);
 	set("trusted_write/\n",t_write);
-	
+
 	e_read=query("exclude_read/\n");
 	e_write=query("exclude_write/\n");
 	if(sizeof(e_read))
@@ -87,7 +87,7 @@ void restore_list()
 		e_write=({"(player)"});
 	set("exclude_read/\n",e_read);
 	set("exclude_write/\n",e_write);
-	
+
 	wiz_status = query("wiz_status");
 	trusted_write = query("trusted_write");
 	trusted_read = query("trusted_read");
@@ -241,7 +241,7 @@ void create()
 	//在wizlist属性里储存，而不再在/adm/etc/wizlist里存储！
 	set("channel_id","安全精灵");
 	restore();
-	restore_list();	
+	restore_list();
 }
 
 string *query_wizlist() { return keys(wiz_status); }
@@ -250,7 +250,7 @@ string *query_wizlist() { return keys(wiz_status); }
 string get_status(mixed ob)
 {
 	string euid;
-	if( objectp(ob) ) 
+	if( objectp(ob) )
 	{
 		euid = geteuid(ob);
 		if( !euid ) euid = getuid(ob);
@@ -275,9 +275,9 @@ int set_status(mixed ob, string status)
 		if(!wiz_level(previous_object())>wiz_level("(arch)"))//允许arch,hufa设置巫师表
 			return 0;
 	//这个地方应该严格审核是否有权进行提升操作！
-	if( objectp(ob)&&userp(ob) )	
+	if( objectp(ob)&&userp(ob) )
 		uid = getuid(ob);
-	else 
+	else
 		if(stringp(ob))
 			uid = ob;
 		else
@@ -349,7 +349,7 @@ int valid_read(string file, mixed user, string func)
 	if((file=="/u/"||file=="/u")&&wiz_level(status)>wiz_level("(immortal)"))
 		return 1;
 	//对于/u下的可以读自己的目录！
-	if( sscanf(file, "/u/" + euid + "/%*s") 
+	if( sscanf(file, "/u/" + euid + "/%*s")
 		||file=="/u/"+euid)
 		return 1;
 
@@ -383,10 +383,10 @@ int valid_read(string file, mixed user, string func)
 		if( member_array(status, trusted_read[dir])!=-1 ) return 1;
 	}
 	if(wizhood(user)!="(player)")
-		log_file("wiz_read_fail.log", sprintf("%s(%s) 试图越权读取 %s ！\n", 
+		log_file("wiz_read_fail.log", sprintf("%s(%s) 试图越权读取 %s ！\n",
 			geteuid(user), wizhood(user), file));
 	else
-	log_file("read_fail.log", sprintf(CHINESE_D->chinese_time(6,ctime(time()))+"%s(%s) 试图调用 %s 失败。函数："+func+"\n", 
+	log_file("read_fail.log", sprintf(CHINESE_D->chinese_time(6,ctime(time()))+"%s(%s) 试图调用 %s 失败。函数："+func+"\n",
 			geteuid(user), wizhood(user), file));
 	return 0;
 }
@@ -474,4 +474,3 @@ int valid_seteuid( object ob, string uid )
 		return 1;
 	return 0;
 }
-

@@ -4,7 +4,7 @@
 #include <dbase.h>
 #include <condition.h>
 
-static string *my_id;
+nosave string *my_id;
 
 void set_name(string name, string *id)
 {
@@ -19,13 +19,13 @@ int id(string str)
 
 	if( this_player() && !this_player()->visible(this_object()) ) return 0;
 
-	if( pointerp(applied_id = query_temp("apply/id")) 
-	&&	sizeof(applied_id) ) 
+	if( pointerp(applied_id = query_temp("apply/id"))
+	&&	sizeof(applied_id) )
 		if( member_array(str, applied_id)!=-1 )
 			return 1;
 		else
 			return 0;
-			
+
 	// If apply/id exists, this object is "pretending" something, don't
 	// recognize original id to prevent breaking the pretending with "id"
 	// command.
@@ -40,7 +40,7 @@ string *parse_command_id_list()
 {
 	string *applied_id;
 
-	if( pointerp(applied_id = query_temp("apply/id")) 
+	if( pointerp(applied_id = query_temp("apply/id"))
 	&&	sizeof(applied_id) )
 		return applied_id;
 	else
@@ -50,7 +50,7 @@ string *parse_command_id_list()
 varargs string name(int raw)
 {
 	string str, *mask;
-	
+
 	if( !raw && sizeof(mask = query_temp("apply/name")) )
 		return mask[sizeof(mask)-1];
 	else {
@@ -65,7 +65,7 @@ varargs string short(int raw)
 {
 	mapping party;
 	string party_title,title, nick, str , *mask;
-	
+
 	if( !stringp(str = query("short")) )
 		str = name(raw) + "(" + capitalize(query("id")) + ")";
 
@@ -79,10 +79,10 @@ varargs string short(int raw)
 		else if ((int)query_temp("pending/zhoutian") != 0)
 			return name() + "正坐在地下运周天。";
 	}
-	
+
         if( !raw && sizeof(mask = query_temp("apply/short")) )
                 str = (string)mask[sizeof(mask)-1];
-	else 
+	else
 	{
 		if( stringp(nick = query("nickname")) )
 			str = sprintf("「%s」%s", nick, str);
@@ -90,7 +90,7 @@ varargs string short(int raw)
 		if( stringp(title = query("title")) )
 			str = sprintf("%s%s%s", title,(nick?"":" "), str);
 
-		if ( mapp(party = query("party")) ) 
+		if ( mapp(party = query("party")) )
 		{
 			party_title = party["party_name"] + party["rank"];
 			str=sprintf("%s %s%s%s", party_title,(title?"":" "),(nick?"":" "), str);
@@ -122,7 +122,7 @@ varargs string short(int raw)
 varargs string long(int raw)
 {
 	string str, extra, *mask;
-	
+
 	if( !raw && sizeof(mask = query_temp("apply/long")) )
 		str = mask[sizeof(mask)-1];
 	else if( !stringp(str = query("long")) )
@@ -133,4 +133,3 @@ varargs string long(int raw)
 
 	return str;
 }
-
