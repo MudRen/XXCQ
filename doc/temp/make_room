@@ -9,7 +9,7 @@
 	目前共有三类房间允许继承：
 	１）普通房间(inherit ROOM)
 	２）银行(inherit BANK)
-	３）驿站(inherit YIZHAN)
+	３）驿站(i"/clone/room/mache.h" YIZHAN)
 	如需大量有相同或相近功能的房间，可以制作新的房间类。
 
 　　２、房间描述：

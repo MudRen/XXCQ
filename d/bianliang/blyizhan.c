@@ -1,7 +1,8 @@
 // Room: /city/chouduanhang.c
-// YZC 1995/12/04 
+// YZC 1995/12/04
 
-#include YIZHAN
+#include "/clone/room/mache.h"
+
 inherit ROOM;
 
 void create()
